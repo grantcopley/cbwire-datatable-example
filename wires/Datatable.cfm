@@ -94,6 +94,7 @@
         reset( "deleting" );
         reset( "searchTerm" );
         reset( "selected" );
+        reset( "selectAllBtn" );
     }
 
     function selectBox( id, isChecked, pressedShift ) {
