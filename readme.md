@@ -1,10 +1,11 @@
-# CBBWIRE DataTable Example
+# CBWIRE DataTable Example
 
 Here you will find a fully functional DataTable implemented almost entirely in CFML using CBWIRE. The DataTable has the following features that were built from the ground up:
 
 * Listing of customers
 * Set the number of customers displayed per page
 * Pagination
+* Reset button to start over
 * Search field to match any column
 * Sort columns by ascending or descending
 * Select customers by checkbox
