@@ -1,0 +1,19 @@
+{
+    "default": {
+        "manager": "cfmigrations.models.QBMigrationManager",
+        "migrationsDirectory": "resources/database/migrations/",
+        "seedsDirectory": "resources/database/seeds/",
+        "properties": {
+            "defaultGrammar": "MySQLGrammar@qb",
+            "schema": "${DB_SCHEMA}",
+            "migrationsTable": "cfmigrations",
+            "connectionInfo": {
+                "host": "${DB_HOST}",
+                "username": "${DB_USER}",
+                "password": "${DB_PASSWORD}",
+                "database": "${DB_DATABASE}",
+                "type": "mysql"
+            }
+        }
+    }
+}
