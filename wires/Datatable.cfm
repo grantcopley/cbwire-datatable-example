@@ -72,6 +72,15 @@
         data.sortDirection = ( data.sortDirection == "asc" ? "desc" : "asc" );
     }
 
+    function toggleSelect( id ) {
+        var index = arrayFindNoCase( data.selected, id );
+        if ( index ) {
+            arrayDeleteAt( data.selected, index );
+        } else {
+            arrayAppend( data.selected, id );
+        }
+    }
+
     function confirmDelete() {
         data.deleting = true;
     }
@@ -260,10 +269,10 @@
                                 <td>
                                     <input type="checkbox" x-model="selected" value="#customer.id#" @click.prevent="clickHandler( $event )">
                                 </td>
-                                <td>#customer.firstname#</td>
-                                <td>#customer.lastname#</td>
-                                <td>#customer.company#</td>
-                                <td>#customer.email#</td>
+                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.firstname#</td>
+                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.lastname#</td>
+                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.company#</td>
+                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.email#</td>
                             </tr>
                         </cfloop>
                     </tbody>
