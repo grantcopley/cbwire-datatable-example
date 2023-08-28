@@ -2,10 +2,13 @@
 
 Here you will find a fully functional DataTable implemented almost entirely in CFML using CBWIRE. The DataTable has the following features that were built from the ground up:
 
-* Listing of customers
+* Single CBWIRE Component ( wires/Datatable.cfm - provides all functionality )
+* List customers
 * Set the number of customers displayed per page
 * Pagination
 * Reset button to start over
+* Click anywhere on row to select customer
+* Select all customers listed
 * Search field to match any column
 * Sort columns by ascending or descending
 * Select customers by checkbox
