@@ -8,6 +8,7 @@ Here you will find a fully functional DataTable implemented almost entirely in C
 * Pagination
 * Reset button to start over
 * Click anywhere on row to select customer
+* Select all customers listed
 * Search field to match any column
 * Sort columns by ascending or descending
 * Select customers by checkbox
