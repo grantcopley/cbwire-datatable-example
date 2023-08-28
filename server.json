@@ -2,6 +2,7 @@
     "app":{
         "libDirs":"lib/java"
     },
+    "open":true,
     "web":{
         "rewrites":{
             "enable":"true"
