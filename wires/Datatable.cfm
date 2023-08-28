@@ -253,6 +253,10 @@
                     <button 
                         wire:click="confirmDelete"
                         class="btn btn-danger btn-sm" <cfif not arrayLen( selected )>disabled</cfif>>Delete<cfif arrayLen( selected )> (#arrayLen( selected )#)</cfif></button>
+
+                    <button 
+                        wire:click="startOver"
+                        class="btn btn-secondary btn-link">Reset</button>
                 </div>
                 <table class="table table-hover">
                     <thead>
