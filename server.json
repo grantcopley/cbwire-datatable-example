@@ -5,9 +5,6 @@
     },
     "open":true,
     "web":{
-        "http":{
-            "port":"46347"
-        },
         "rewrites":{
             "enable":"true"
         }
