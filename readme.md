@@ -3,20 +3,20 @@
 Here you will find a fully functional DataTable implemented almost entirely in CFML using CBWIRE. The DataTable has the following features that were built from the ground up:
 
 * Single CBWIRE Component ( wires/Datatable.cfm - provides all functionality )
-* List customers
-* Set the number of customers displayed per page
+* List NES games
+* Set the number of games displayed per page
 * Pagination
 * Reset button to start over
-* Click anywhere on row to select customer
-* Select all customers listed
+* Click anywhere on the row to select a game
+* Select all games listed
 * Search field to match any column
 * Sort columns by ascending or descending
-* Select customers by checkbox
-* Shift+Click to select multiple customers
-* Delete customer(s) w/ confirmation
+* Select games by checkbox
+* Shift+Click to select multiple games
+* Favorite games(s) w/ confirmation
 
 ## Screenshot
-<img width="800" alt="CleanShot 2023-08-28 at 16 46 36@2x" src="https://github.com/grantcopley/cbwire-datatable-example/assets/1197835/82fd2a0e-c530-425f-a35b-2a902849b701">
+<img width="800" alt="CleanShot 2023-08-29 at 00 38 12@2x" src="https://github.com/grantcopley/cbwire-datatable-example/assets/1197835/045181ca-0c87-4980-9879-d4e8b56aa452">
 
 ## Requirements
 
@@ -28,4 +28,4 @@ Here you will find a fully functional DataTable implemented almost entirely in C
 * Use CommandBox to install dependencies `box install`
 * Start your CFML server `box server start --open`
 
-After the server completes startup, your browser show open automatically and the DataTable should be visible.
+After the server completes startup, your browser will open automatically and the DataTable should be visible.
