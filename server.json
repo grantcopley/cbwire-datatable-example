@@ -1,9 +1,13 @@
 {
     "app":{
+        "cfengine":"lucee@5.4.3.2",
         "libDirs":"lib/java"
     },
     "open":true,
     "web":{
+        "http":{
+            "port":"46347"
+        },
         "rewrites":{
             "enable":"true"
         }
