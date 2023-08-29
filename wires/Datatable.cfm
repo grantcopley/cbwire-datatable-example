@@ -1,9 +1,9 @@
 <cfscript>
 
     /**
-     * Customer service
+     * Game service
      */
-    property name="customerService" inject="CustomerService";
+    property name="gameService" inject="GameService";
 
     /**
      * Data properties
@@ -12,11 +12,11 @@
         "limit": 10,
         "page": 1,
         "searchTerm": "",
-        "sortBy": "firstname",
+        "sortBy": "game",
         "sortDirection": "asc",
         "selectAllBtn": false,
         "selected": [],
-        "deleting": false
+        "favoriting": false
     };
 
     /**
@@ -33,8 +33,8 @@
     function onUpdateSelectAllBtn() {
         data.selected = [];
         if ( data.selectAllBtn ) {
-            data.selected = currentCustomerResults().map( function( customer ) {
-                return customer.id
+            data.selected = currentGameResults().map( function( game ) {
+                return game.id
             } );
         }
     }
@@ -42,24 +42,16 @@
     /**
      * Actions
      */
-    function startOver() {
+    function removeFavorites() {
+        gameService.clearFavorites();
         reset();
     }
 
-    function paginate( page ) {
+    function changePage( page ) {
         data.page = arguments.page;
     }
 
-    function nextPage() {
-        data.page += 1;
-    }
-
-    function previousPage() {
-        if ( data.page == 1 ) return;
-        data.page -= 1;
-    }
-
-    function sortCustomers( column ) {
+    function sortGames( column ) {
         if ( data.sortBy == arguments.column ) {
             // already sorting, so change the sortDirection
             toggleSortDirection();
@@ -81,17 +73,17 @@
         }
     }
 
-    function confirmDelete() {
-        data.deleting = true;
+    function confirmFavorite() {
+        data.favoriting = true;
     }
 
-    function cancelDelete() {
-        reset( "deleting" );
+    function cancelConfirmFavorites() {
+        reset( "favoriting" );
     }
 
-    function deleteSelected() {
-        customerService.deleteByIds( data.selected );
-        reset( "deleting" );
+    function favoriteGames() {
+        gameService.favoriteByIds( data.selected );
+        reset( "favoriting" );
         reset( "searchTerm" );
         reset( "selected" );
         reset( "selectAllBtn" );
@@ -102,17 +94,17 @@
             data.selected.append( id );
             if ( arguments.pressedShift ) {
 
-                var customerIndex = currentCustomerResults().reduce( function( agg, customer, i ) {
-                    if ( customer.id == id ) {
+                var gameIndex = currentGameResults().reduce( function( agg, game, i ) {
+                    if ( game.id == id ) {
                         agg = i;
                     }
                     return agg;
                 }, 0 );
 
-                for ( var i = customerIndex-1; i>=1; i-- ) {
-                    var customer = currentCustomerResults()[ i ];
-                    if ( !arrayFindNoCase( data.selected, customer.id ) ) {
-                        data.selected.append( customer.id );
+                for ( var i = gameIndex-1; i>=1; i-- ) {
+                    var game = currentGameResults()[ i ];
+                    if ( !arrayFindNoCase( data.selected, game.id ) ) {
+                        data.selected.append( game.id );
                     } else {
                         break;
                     }
@@ -130,24 +122,24 @@
     }
 
     function seedDatabase() {
-        customerService.seedDatabase();        
+        gameService.seedDatabase();        
     }
 
     /** Additional methods **/
-    function currentCustomers() {
-        return customerService.search( filters=data )
+    function currentGames() {
+        return gameService.search( filters=data )
     }
 
-    function currentCustomerResults() {
-        return currentCustomers().results;
+    function currentGameResults() {
+        return currentGames().results;
     }
 
-    function selectedCustomers() {
-        return customerService.getByIDs( data.selected );
+    function selectedGames() {
+        return gameService.getByIDs( data.selected );
     }
 
     function pagination() {
-        return currentCustomers().pagination;
+        return currentGames().pagination;
     }
 
     function totalRecords() {
@@ -198,7 +190,7 @@
 
         <div class="row align-items-center">
             <div class="col">
-                <h1>CBWIRE DataTable</h1>
+                <h1>Your Favorite NES Games</h1>
             </div>
             <div class="col text-end">
                 Powered by caffeine and <a href="https://cbwire.ortusbooks.com">CBWIRE</a>.
@@ -206,24 +198,24 @@
         </div>
 
 
-        <cfif deleting>
+        <cfif favoriting>
             <div class="mt-3">
-                Are you sure you want to remove theses <strong>#arrayLen( selected )# customer(s)</strong>?
+                Are you sure you want to favorite theses <strong>#arrayLen( selected )# games(s)</strong>?
             </div>
             <div class="mt-3">
                 <ul>
-                    <cfloop array="#selectedCustomers()#" index="customer">
-                        <li>#customer.firstname# #customer.lastname# (#customer.company#) &lt;#customer.email#&gt;</li>
+                    <cfloop array="#selectedGames()#" index="gameObj">
+                        <li>#gameObj.game#</li>
                     </cfloop>
                 </ul>
             </div>
             <div class="mt-3">
                 <button 
-                    wire:click="deleteSelected"
-                    class="btn btn-primary">Delete</button>
+                    wire:click="favoriteGames"
+                    class="btn btn-primary">Favorite</button>
 
                 <button 
-                    wire:click="cancelDelete"
+                    wire:click="cancelConfirmFavorites"
                     class="btn btn-secondary">Cancel</button>
             </div>
         <cfelse>
@@ -232,9 +224,9 @@
                     <div class="col">
                         Display:
                         <select wire:model="limit">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
+                            <option value="10">10 games</option>
+                            <option value="20">20 games</option>
+                            <option value="50">50 games</option>
                         </select>
                         <span wire:loading>...</span>
                     </div>
@@ -248,36 +240,38 @@
                 </div>
             </div>
     
-            <cfif arrayLen( currentCustomerResults() )>
+            <cfif arrayLen( currentGameResults() )>
                 <div>
                     <button 
-                        wire:click="confirmDelete"
-                        class="btn btn-danger btn-sm" <cfif not arrayLen( selected )>disabled</cfif>>Delete<cfif arrayLen( selected )> (#arrayLen( selected )#)</cfif></button>
+                        wire:click="confirmFavorite"
+                        class="btn btn-primary" <cfif not arrayLen( selected )>disabled</cfif>>Set Favorite<cfif arrayLen( selected )> (#arrayLen( selected )#)</cfif></button>
 
                     <button 
-                        wire:click="startOver"
-                        class="btn btn-secondary btn-link">Reset</button>
+                        wire:click="removeFavorites"
+                        class="btn btn-link">Reset Favorites</button>
                 </div>
                 <table class="table table-hover">
                     <thead>
                         <th style="width: 5%;">
                             <input type="checkbox" x-model="selectAllBtn" value="true">
                         </th>
-                        <th style="width: 22%;"><a wire:click.prevent="sortCustomers( 'firstname' )" href="##">Firstname</a></th>
-                        <th style="width: 22%;"><a wire:click.prevent="sortCustomers( 'lastname' )" href="##">Lastname</a></th>
-                        <th style="width: 22%;"><a wire:click.prevent="sortCustomers( 'company' )" href="##">Company</a></th>
-                        <th style="width: 22%;"><a wire:click.prevent="sortCustomers( 'email' )" href="##">Email</a></th>
+                        <th style="width: 22%;"><a wire:click.prevent="sortGames( 'game' )" href="##">Game</a></th>
+                        <th style="width: 22%;"><a wire:click.prevent="sortGames( 'publisher' )" href="##">Publisher</a></th>
+                        <th style="width: 22%;"><a wire:click.prevent="sortGames( 'license' )" href="##">License</a></th>
+                        <th style="width: 22%;"><a wire:click.prevent="sortGames( 'rarity' )" href="##">Rarity</a></th>
+                        <th style="width: 5%;"><a wire:click.prevent="sortGames( 'favorite' )" href="##">Favorite</a></th>
                     </thead>
                     <tbody>
-                        <cfloop array="#currentCustomerResults()#" index="customer">
+                        <cfloop array="#currentGameResults()#" index="gameObj">
                             <tr>
                                 <td>
-                                    <input type="checkbox" x-model="selected" value="#customer.id#" @click.prevent="clickHandler( $event )">
+                                    <input type="checkbox" x-model="selected" value="#gameObj.id#" @click.prevent="clickHandler( $event )">
                                 </td>
-                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.firstname#</td>
-                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.lastname#</td>
-                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.company#</td>
-                                <td wire:click="toggleSelect( '#customer.id#' )">#customer.email#</td>
+                                <td wire:click="toggleSelect( '#gameObj.id#' )">#gameObj.game#</td>
+                                <td wire:click="toggleSelect( '#gameObj.id#' )">#gameObj.publisher#</td>
+                                <td wire:click="toggleSelect( '#gameObj.id#' )">#gameObj.license#</td>
+                                <td wire:click="toggleSelect( '#gameObj.id#' )">#gameObj.rarity#</td>
+                                <td wire:click="toggleSelect( '#gameObj.id#' )"><cfif gameObj.favorite><i class="fa-solid fa-star text-primary"></i></cfif></td>
                             </tr>
                         </cfloop>
                     </tbody>
@@ -286,9 +280,8 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <cfloop from="#startPaginationAt()#" to="#endPaginationAt()#" index="i">
-                            <li class="page-item <cfif i eq page>active</cfif>"><a wire:click.prevent="paginate( #i# )" class="page-link" href="##">#i#</a></li>
+                            <li class="page-item <cfif i eq page>active</cfif>"><a wire:click.prevent="changePage( #i# )" class="page-link" href="##">#i#</a></li>
                         </cfloop>
-                        <li class="page-item"><a wire:click.prevent="startOver" class="page-link" href="##">Reset</a></li>
                     </ul>
                 </nav>
                 <div class="mb-3">
