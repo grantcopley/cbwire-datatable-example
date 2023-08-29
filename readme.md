@@ -18,6 +18,13 @@ Here you will find a fully functional DataTable implemented almost entirely in C
 ## Screenshot
 <img width="800" alt="CleanShot 2023-08-29 at 00 38 12@2x" src="https://github.com/grantcopley/cbwire-datatable-example/assets/1197835/045181ca-0c87-4980-9879-d4e8b56aa452">
 
+## Core Files
+
+These files you'll want to open and tinker with to learn how to build your own CBWIRE DataTable.
+
+* wires/Datatable.cfm
+* layouts/Main.cfm
+
 ## Requirements
 
 * CommandBox 5.8+
