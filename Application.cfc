@@ -63,6 +63,19 @@ component {
 
 	/**
 	 * --------------------------------------------------------------------------
+	 * Manually load JDBC jar as an OSGI bundle
+	 * --------------------------------------------------------------------------
+	 */
+	bundleSymbolicName = "org.sqlite.JDBC";
+	bundleVersion = "3.40.0";
+	bundlePath = ExpandPath( "/lib/java/sqlite-jdbc-3.40.0.0.jar" );
+	osgiLoader = new models.util.OSGILoader();
+	if( !osgiLoader.bundleIsLoaded( bundleSymbolicName, bundleVersion ) ){
+		osgiLoader.installBundle( bundlePath );
+	}
+
+	/**
+	 * --------------------------------------------------------------------------
 	 * ORM + Datasource Settings
 	 * --------------------------------------------------------------------------
 	 */
