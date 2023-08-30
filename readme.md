@@ -13,7 +13,7 @@ Here you will find a fully functional DataTable implemented almost entirely in C
 * Sort columns by ascending or descending
 * Select games by checkbox
 * Shift+Click to select multiple games
-* Favorite games(s) w/ confirmation
+* Save favorite games w/ confirmation
 
 ## Screenshot
 <img width="800" alt="CleanShot 2023-08-29 at 00 38 12@2x" src="https://github.com/grantcopley/cbwire-datatable-example/assets/1197835/045181ca-0c87-4980-9879-d4e8b56aa452">
