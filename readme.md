@@ -1,5 +1,7 @@
 # CBWIRE DataTable Example
 
+Become a web development hero with CBWIRE!
+
 Here you will find a fully functional DataTable implemented almost entirely in CFML using CBWIRE. The DataTable has the following features that were built from the ground up:
 
 * Single CBWIRE Component ( wires/Datatable.cfm - provides all functionality )
