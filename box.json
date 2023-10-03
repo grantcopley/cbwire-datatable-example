@@ -32,7 +32,7 @@
     },
     "dependencies":{
         "coldbox":"^7.0.0",
-        "cbwire":"3.1.0-snapshot",
+        "cbwire":"3.1",
         "qb":"^9.5.0",
         "mockdatacfc":"^3.6.0+13"
     },
