@@ -25,7 +25,7 @@
     }">
         <div class="row align-items-center">
             <div class="col">
-                <h1>Favorite Games</h1>
+                <h1>Favorite NES Games</h1>
             </div>
             <div class="col text-end">
                 Powered by caffeine and <a href="https://cbwire.ortusbooks.com">CBWIRE</a>.
