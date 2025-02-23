@@ -1,9 +1,9 @@
 {
-    "name":"My ColdBox App",
+    "name":"cbwire-datatable-example",
     "version":"1.0.0",
-    "author":"You",
+    "author":"Grant Copley",
     "location":"forgeboxStorage",
-    "slug":"my-coldbox-app",
+    "slug":"cbwire-datatable-example",
     "createPackageDirectory":false,
     "type":"mvc",
     "keywords":"",
@@ -32,7 +32,7 @@
     },
     "dependencies":{
         "coldbox":"^7.0.0",
-        "cbwire":"3.1",
+        "cbwire":"4",
         "qb":"^9.5.0",
         "mockdatacfc":"^3.6.0+13"
     },
